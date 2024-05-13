@@ -1,6 +1,9 @@
 #pragma once
 
+#include <vector>
 #include "vector"
+
+typedef std::vector<int>::iterator it;
 
 class Span {
 private:
@@ -17,7 +20,7 @@ public:
   void addNumber(int n);
   int shortestSpan();
   int longestSpan();
-  void fillVector(unsigned int range);
+  void fillVector(it begin, it end);
   void printVector(void);
 
   // getters

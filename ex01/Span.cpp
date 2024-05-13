@@ -1,9 +1,6 @@
 #include "Span.hpp"
 #include <algorithm>
-#include <cstdlib>
-#include <ctime>
 #include <iostream>
-#include <list>
 #include <stdexcept>
 
 typedef std::vector<int>::iterator iterator; // simplifying purposes
@@ -51,7 +48,7 @@ int Span::shortestSpan() {
 }
 
 int Span::longestSpan() {
-  if (this->size < 2 || this->vector.empty()) {
+  if (this->vector.size() < 2 || this->size < 2 || this->vector.empty()) {
     throw std::range_error(
         "span::longestSpan: Vector must contain at least two elements.");
   }
@@ -62,18 +59,16 @@ int Span::longestSpan() {
   return *maxVal - *minVal;
 }
 
-void Span::fillVector(unsigned int range) {
-  // generate random numbers. and assinge them using the iterator
-  if (range == 0 || range > this->size)
-    throw std::range_error("Span::fillVector: can't Generate.");
-
-  srand(time(0));
-
-  std::list<int> tmp(range);
-  std::generate(tmp.begin(), tmp.end(), rand);
-
-  // inserting the generated number into the vector;
-  this->vector.insert(this->vector.end(), tmp.begin(), tmp.end());
+void Span::fillVector(it begin, it end) {
+	// get range
+	int range = (end - begin);
+	if (!range)
+    throw std::range_error(
+        "span::fillVector: invalid range.");
+	if (range + this->vector.size() > this->size)
+    throw std::range_error(
+        "span::fillVector: range is biger then size.");
+  this->vector.insert(this->vector.end(), begin, end);
 }
 
 void Span::printVector(void) {
