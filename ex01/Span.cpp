@@ -27,7 +27,7 @@ void Span::addNumber(int n) {
 }
 
 int Span::shortestSpan() {
-  if (this->vector.empty() || this->vector.size() < 2) {
+  if (this->vector.empty() || this->vector.size() < 2 || this->size < 2) {
     throw std::range_error(
         "Span::shortestSpan() => Vector must contain at least two elements.");
   }
@@ -37,11 +37,11 @@ int Span::shortestSpan() {
 
   int span = *(tmp.begin() + 1) - *tmp.begin();
 
+  int hold;
   for (iterator it = tmp.begin(); it != tmp.end() - 1; it++) {
     // check for span on each 2 elements
-    int tmp;
-    if ((tmp = *(it + 1) - *it) < span)
-      span = tmp;
+    if ((hold = *(it + 1) - *it) < span)
+      span = hold;
   }
 
   return span;
@@ -61,7 +61,9 @@ int Span::longestSpan() {
 
 void Span::fillVector(it begin, it end) {
 	// get range
-	int range = (end - begin);
+	std::vector<int> tmp(begin, end);
+	int range = tmp.size();
+
 	if (!range)
     throw std::range_error(
         "span::fillVector: invalid range.");
